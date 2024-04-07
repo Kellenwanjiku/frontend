@@ -39,14 +39,8 @@
         class="w-1/2 flex justify-center items-center bg-white text-gray-700"
       >
         <div class="w-96">
-          <h2 class="text-2xl font-semibold mb-6">Sign Up</h2>
+          <h2 class="text-2xl font-semibold mb-6">Sign In</h2>
           <div class="space-y-4">
-            <input
-              id="fullName"
-              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Full Name"
-              type="text"
-            />
             <input
               id="email"
               class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -59,23 +53,17 @@
               placeholder="Password"
               type="password"
             />
-            <input
-              id="confirm_password"
-              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Confirm password"
-              type="password"
-            />
           </div>
           <button
-            onclick="signup()"
+            onclick="register()"
             class="w-full bg-green-600 text-white px-4 py-2 rounded mt-6 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
           >
-            Sign Up
+            Sign in
           </button>
           <p class="text-center text-sm mt-4">
-            Already have an account?
-            <a class="text-green-600 hover:text-green-700" href="./login.html">
-              Log in
+            Don't have an account?
+            <a class="text-green-600 hover:text-green-700" href="./signup.html">
+              Sign up
             </a>
           </p>
         </div>
@@ -83,12 +71,9 @@
     </div>
 
     <script>
-      function signup() {
-        const fullName = document.getElementById("fullName").value;
+      function register() {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        const confirm_password =
-          document.getElementById("confirmpassword").value;
 
         fetch("/api/v1/auth/register", {
           method: "POST",
@@ -96,10 +81,8 @@
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            fullName: fullName,
             email: email,
             password: password,
-            confirm_password: confirm_password,
           }),
         })
           .then((response) => {
@@ -109,8 +92,9 @@
             return response.json();
           })
           .then((data) => {
-            console.log(data); // Handle successful sign-up response
-            // Redirect to login page or perform other actions as needed
+            console.log(data);
+            window.location.href = "/dashboard.html";
+            // Handle successful registration response
           })
           .catch((error) => {
             console.error(
