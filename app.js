@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         });
       });
       // Signup Form Logic
+      /*
       const signupForm = document.getElementById("signupForm");
       signupForm.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -55,6 +56,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const fullName = document.getElementById("fullName").value;
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
+        const confirm_password = document.getElementById("confirm_password").value;
 
         // Input Validation (You would perform validation here)
 
@@ -63,6 +65,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         // Redirect to the user account dashboard
         window.location.href = "dashboard.html";
-      });
+      });*/
     });
 });

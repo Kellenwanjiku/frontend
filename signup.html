@@ -42,7 +42,7 @@
           <h2 class="text-2xl font-semibold mb-6">Sign Up</h2>
           <div class="space-y-4">
             <input
-              id="fullName"
+              id="full_name"
               class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Full Name"
               type="text"
@@ -84,11 +84,12 @@
 
     <script>
       function signup() {
-        const fullName = document.getElementById("fullName").value;
+        console.log(document.getElementById("full_name"));
+        const full_name = document.getElementById("full_name").value;
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         const confirm_password =
-          document.getElementById("confirmpassword").value;
+          document.getElementById("confirm_password").value;
 
         fetch("http://127.0.0.1:8000/api/v1/auth/register", {
           method: "POST",
@@ -96,7 +97,7 @@
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            fullName: fullName,
+            full_name: full_name,
             email: email,
             password: password,
             confirm_password: confirm_password,
