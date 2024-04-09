@@ -1,3 +1,5 @@
+
+/*
 // Define the API endpoints
 const incomeEndpoint = "http://127.0.0.1:8000/api/v1/users/user-incomes";
 const assetsEndpoint = "http://127.0.0.1:8000/api/v1/users/user-assets";
@@ -64,3 +66,4 @@ updateDashboard();
 
 // Optional: Set up periodic updates
 setInterval(updateDashboard, 60000); // Update every minute
+*/

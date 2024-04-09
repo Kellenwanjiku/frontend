@@ -3,7 +3,7 @@ name = "finance-tracker"
 version = "0.1.0"
 description = "finance"
 authors = [
-    {name = "MelodyNdungu", email = "melodymuthoni4@gmail.com"},
+    {name = "Kellen", email = "gitahikellen@gmail.com"},
 ]
 dependencies = []
 requires-python = ">=3.12"

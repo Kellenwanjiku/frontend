@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", (event) => {
-  const isLoggedIn = false; // Set to true if the user is logged in, false otherwise
+  /*const isLoggedIn = false; // Set to true if the user is logged in, false otherwise
 
   // Redirect the user based on their login status
   if (isLoggedIn) {
@@ -7,18 +7,86 @@ document.addEventListener("DOMContentLoaded", (event) => {
   } else {
     // window.location.href = "landingPage.html";
     // Redirect to the landing page if not logged in
+  }*/
+
+  const mainContent = document.getElementById('main-content');
+  console.log("mainContent:", mainContent); // Check if element is found
+
+  const navigationLinks = document.querySelectorAll('#left-navigation ul li > a'); 
+  if (navigationLinks) {
+    navigationLinks.forEach(link => {
+      console.log("Link:", link); // See if links are selected correctly
+      link.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default navigation behavior
+
+            const sectionToLoad = link.getAttribute('href').split('.')[0];  
+            fetchContentAndLoad(sectionToLoad);
+        });
+    });
   }
-  const navigationContainer = document.getElementById("navigation-container");
 
-  fetch("navigation.html")
-    .then((response) => response.text())
-    .then((html) => {
-      navigationContainer.innerHTML = html;
+  function fetchContentAndLoad(section) {
+    const url = `/content/${section}?t=${Date.now()}`; // Add timestamp for cache-busting
+    console.log("Fetching content from URL:", url);
 
-      // Financial Overview Dropdown
-      const financialDropdowns = document.querySelectorAll(
-        ".financial-dropdown"
-      );
+    fetch(`/content/${section}`) // Assuming content is in a 'content' folder
+        .then((response) => response.text())
+        .then((htmlContent) => {
+          if (htmlContent) { // Check if content is not empty
+            mainContent.innerHTML = htmlContent;
+        } else {
+            console.error("Error: Empty content received");
+            // Handle empty content scenario (display error message)
+        }
+        })
+        .catch((error) => {
+            console.error("Error fetching content:", error);
+            // Display an error message to the user here
+        });
+  }
+  
+  fetchContentAndLoad('financialdashboard.html');
+  console.log("Fetching content:", 'financialdashboard.html');
+
+ /*
+  // Select all the navigation links
+    const navLinks = document.querySelectorAll('#left-navigation -a');
+
+// Add a click event listener to each navigation link
+    navLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+    // Prevent the default behavior of the link
+    event.preventDefault();
+
+    // Get the URL of the HTML page to load
+    const url = event.target.getAttribute('href');
+
+    fetch(url)
+    .then(response => {
+      // Check if the request was successful
+      if (response.ok) {
+        // Get the HTML content of the page
+        return response.text();
+      } else {
+        // Handle the error
+        throw new Error(`Error loading ${url}: ${response.statusText}`);
+      }
+    })
+
+    .then(htmlContent => {
+      // Insert the HTML content into the #main-content div
+      const mainContentDiv = document.querySelector('#main-content');
+      mainContentDiv.innerHTML = htmlContent;
+    })
+    .catch(error => {
+      // Handle the error
+      console.error(error);
+    });
+    });
+    });
+*/
+      // Financial Overview Dropdown (Keep this!)
+      const financialDropdowns = document.querySelectorAll(".financial-dropdown");
       financialDropdowns.forEach((dropdown) => {
         const toggle = dropdown.querySelector(".financial-dropdown-toggle");
         const menu = dropdown.querySelector(".financial-dropdown-menu");
@@ -28,43 +96,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         });
       });
 
-      // Profile Dropdown
-      const dropdownMenuButton = document.getElementById("dropdownMenuButton");
-      const dropdownIcon = document.getElementById("dropdownIcon");
-      const logoutLink = document.querySelector(".dropdown-menu a");
+  
 
-      [dropdownMenuButton, dropdownIcon].forEach((element) => {
-        element.addEventListener("click", () => {
-          console.log("Dropdown button clicked!");
-          console.log(
-            "Logout link visibility (before toggle):",
-            logoutLink.classList.contains("hidden")
-          );
-          logoutLink.classList.toggle("hidden");
-          console.log(
-            "Logout link visibility (after toggle):",
-            logoutLink.classList.contains("hidden")
-          );
-        });
-      });
-      // Signup Form Logic
-      /*
-      const signupForm = document.getElementById("signupForm");
-      signupForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        const fullName = document.getElementById("fullName").value;
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const confirm_password = document.getElementById("confirm_password").value;
-
-        // Input Validation (You would perform validation here)
-
-        // Simulating successful signup (replace with actual signup logic)
-        console.log("Signup successful for user:", fullName);
-
-        // Redirect to the user account dashboard
-        window.location.href = "dashboard.html";
-      });*/
-    });
 });
