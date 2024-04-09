@@ -26,10 +26,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
 
   function fetchContentAndLoad(section) {
-    const url = `/content/${section}?t=${Date.now()}`; // Add timestamp for cache-busting
+    console.log(section,"Section Selected")
+    const url = `./${section}.html?t=${Date.now()}`; // Add timestamp for cache-busting
     console.log("Fetching content from URL:", url);
 
-    fetch(`/content/${section}`) // Assuming content is in a 'content' folder
+    fetch(url) // Assuming content is in a 'content' folder
         .then((response) => response.text())
         .then((htmlContent) => {
           if (htmlContent) { // Check if content is not empty
@@ -45,8 +46,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
         });
   }
   
-  fetchContentAndLoad('financialdashboard.html');
-  console.log("Fetching content:", 'financialdashboard.html');
+  // fetchContentAndLoad('financialdashboard.html');
+  // console.log("Fetching content:", 'financialdashboard.html');
 
  /*
   // Select all the navigation links

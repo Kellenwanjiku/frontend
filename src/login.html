@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finance Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Open Sans", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-green-900 text-white">
+    <div class="flex h-screen">
+      <div class="w-1/2 bg-green-800 bg-opacity-50 p-12">
+        <div class="flex justify-center">
+          <img
+            alt="Ekash logo"
+            class="mb-4"
+            height="100"
+            src="./piggy-bank.png"
+            width="100"
+          />
+        </div>
+        <h1 class="text-4xl font-semibold mb-6 text-center">
+          Personal Finance Tracker
+        </h1>
+      </div>
+      <div
+        class="w-1/2 flex justify-center items-center bg-white text-gray-700"
+      >
+        <div class="w-96">
+          <h2 class="text-2xl font-semibold mb-6">Sign In</h2>
+          <div class="space-y-4">
+            <input
+              id="email"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="Email"
+              type="email"
+            />
+            <input
+              id="password"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="Password"
+              type="password"
+            />
+          </div>
+          <button
+            onclick="login()"
+            class="w-full bg-green-600 text-white px-4 py-2 rounded mt-6 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            Sign in
+          </button>
+          <p class="text-center text-sm mt-4">
+            Don't have an account?
+            <a class="text-green-600 hover:text-green-700" href="./signup.html">
+              Sign up
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function login() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        fetch("http://127.0.0.1:8000/api/v1/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            console.log("Login Response (before JSON):", response);
+            return response.json();
+          })
+          .then((data) => {
+          // Store JWT in localStorage
+          //console.log("Login Data (JSON):", data); 
+          localStorage.setItem("accessToken", data.access_token); 
+          console.log("JWT stored:", localStorage.getItem("access_token"));
+
+          // Redirect to the dashboard
+          //alert("Signin successful!");
+          //window.location.href = "/dashboard.html"; 
+
+          // (Optional) Call to fetch user data immediately
+          fetchUserData(); 
+        })
+          .catch((error) => {
+            console.error(
+              "There was a problem with your fetch operation:",
+              error
+            );
+          });
+
+          async function fetchUserData() {
+          const accessToken = localStorage.getItem("accessToken");
+          const headers = {
+            Authorization: `Bearer ${accessToken}`,
+          };
+          const response = await fetch(
+            "http://127.0.0.1:8000/api/v1/users/profile",
+            { headers }
+          );
+                  
+         }
+    }
+    </script>
+  </body>
+</html>
